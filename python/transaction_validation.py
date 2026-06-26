@@ -46,35 +46,18 @@ from typing import Optional
 import pandas as pd
 
 # ---------------------------------------------------------------------------
-# Data structures mirroring COBOL copybooks
+# Data structures -- imported from the canonical models package.
+# Re-exported here so that existing callers (e.g. test_transaction_validation)
+# continue to work with ``from transaction_validation import ...``.
 # ---------------------------------------------------------------------------
 
+from models.account import AccountRecord
+from models.card_xref import CardXrefRecord
+from models.daily_transaction import DailyTransactionRecord
 
-@dataclass
-class CardXrefRecord:
-    """CVACT03Y -- CARD-XREF-RECORD (50 bytes)."""
-
-    xref_card_num: str = ""  # PIC X(16)
-    xref_cust_id: int = 0  # PIC 9(09)
-    xref_acct_id: int = 0  # PIC 9(11)
-
-
-@dataclass
-class AccountRecord:
-    """CVACT01Y -- ACCOUNT-RECORD (300 bytes)."""
-
-    acct_id: int = 0  # PIC 9(11)
-    acct_active_status: str = ""  # PIC X(01)
-    acct_curr_bal: Decimal = Decimal("0.00")  # PIC S9(10)V99
-    acct_credit_limit: Decimal = Decimal("0.00")  # PIC S9(10)V99
-    acct_cash_credit_limit: Decimal = Decimal("0.00")  # PIC S9(10)V99
-    acct_open_date: str = ""  # PIC X(10)
-    acct_expiration_date: str = ""  # PIC X(10)
-    acct_reissue_date: str = ""  # PIC X(10)
-    acct_curr_cyc_credit: Decimal = Decimal("0.00")  # PIC S9(10)V99
-    acct_curr_cyc_debit: Decimal = Decimal("0.00")  # PIC S9(10)V99
-    acct_addr_zip: str = ""  # PIC X(10)
-    acct_group_id: str = ""  # PIC X(10)
+# ---------------------------------------------------------------------------
+# Validation-specific structures (not copybook mirrors)
+# ---------------------------------------------------------------------------
 
 
 @dataclass
@@ -97,33 +80,6 @@ class TransactionInput:
     merchant_name: str = ""  # Merchant Name -- MNAMEI PIC X(50)
     merchant_city: str = ""  # Merchant City -- MCITYI PIC X(50)
     merchant_zip: str = ""  # Merchant Zip  -- MZIPI  PIC X(10)
-
-
-@dataclass
-class DailyTransactionRecord:
-    """CVTRA06Y -- DALYTRAN-RECORD (350 bytes).
-
-    Used by the batch posting program (CBTRN02C).
-    """
-
-    dalytran_id: str = ""  # PIC X(16)
-    dalytran_type_cd: str = ""  # PIC X(02)
-    dalytran_cat_cd: int = 0  # PIC 9(04)
-    dalytran_source: str = ""  # PIC X(10)
-    dalytran_desc: str = ""  # PIC X(100)
-    dalytran_amt: Decimal = Decimal("0.00")  # PIC S9(09)V99
-    dalytran_merchant_id: int = 0  # PIC 9(09)
-    dalytran_merchant_name: str = ""  # PIC X(50)
-    dalytran_merchant_city: str = ""  # PIC X(50)
-    dalytran_merchant_zip: str = ""  # PIC X(10)
-    dalytran_card_num: str = ""  # PIC X(16)
-    dalytran_orig_ts: str = ""  # PIC X(26)
-    dalytran_proc_ts: str = ""  # PIC X(26)
-
-
-# ---------------------------------------------------------------------------
-# Validation result
-# ---------------------------------------------------------------------------
 
 
 @dataclass
