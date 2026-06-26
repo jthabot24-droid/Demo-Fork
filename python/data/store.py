@@ -53,6 +53,10 @@ class VsamStore(ABC, Generic[T]):
     def to_dataframe(self) -> pd.DataFrame:
         """Export the store contents as a pandas DataFrame."""
 
+    @abstractmethod
+    def upsert(self, record: T) -> None:
+        """Insert or update regardless of prior existence."""
+
 
 class InMemoryVsamStore(VsamStore[T]):
     """Dictionary-backed VSAM KSDS store with optional CSV persistence.

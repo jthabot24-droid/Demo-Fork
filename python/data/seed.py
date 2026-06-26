@@ -37,9 +37,9 @@ def _decode_signed_decimal(raw: str, decimal_places: int = 2) -> Decimal:
     """Decode a zoned-decimal overpunch string into a ``Decimal``.
 
     >>> _decode_signed_decimal("00000001940{")
-    Decimal('1940.00')
+    Decimal('194.00')
     >>> _decode_signed_decimal("0000001940J")
-    Decimal('-1940.01')
+    Decimal('-194.01')
     """
     if not raw or raw.isspace():
         return Decimal("0.00")
@@ -242,23 +242,23 @@ def read_records(path: Path, record_length: int) -> list[str]:
     """
     text = path.read_text(errors="replace")
 
-    # Strategy 1: if the file uses blank-line separators between records
-    # (common for the CardDemo ASCII exports), split on blank lines and
-    # join continuation lines.
+    # Strategy 1: blank-line-separated records (each block may span
+    # multiple text lines).  Only use this when the file actually
+    # contains blank-line delimiters (at least two blocks).
     blocks = text.split("\n\n")
-    records: list[str] = []
-    for block in blocks:
-        joined = "".join(block.split("\n"))
-        if not joined.strip():
-            continue
-        # Pad to record_length in case trailing spaces were stripped
-        padded = joined.ljust(record_length)
-        records.append(padded)
+    if len(blocks) > 1:
+        records: list[str] = []
+        for block in blocks:
+            joined = "".join(block.split("\n"))
+            if not joined.strip():
+                continue
+            padded = joined.ljust(record_length)
+            records.append(padded)
+        if records:
+            return records
 
-    if records:
-        return records
-
-    # Strategy 2: continuous stream — split every record_length chars
+    # Strategy 2: continuous stream — strip newlines and split every
+    # record_length chars.
     flat = text.replace("\n", "")
     return [
         flat[i : i + record_length].ljust(record_length)
