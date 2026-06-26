@@ -111,7 +111,7 @@ def decode_unsigned_numeric(raw: str) -> int:
 
 def encode_unsigned_numeric(value: int, width: int) -> str:
     """Encode an ``int`` to a ``PIC 9(n)`` field."""
-    return str(value).zfill(width)[:width]
+    return str(value).zfill(width)[-width:]
 
 
 def decode_alphanumeric(raw: str) -> str:

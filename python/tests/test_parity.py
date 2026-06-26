@@ -200,14 +200,17 @@ class TestBatchValidationParity:
         )
         result = validate_batch_transaction(val_rec, xref_df, acct_df)
 
-        # Golden expected output for the first record:
+        # Golden expected output for the first record (derived from sample
+        # data: dailytran.txt record 1 → cardxref.txt → acctdata.txt).
         expected = {
-            "resolved_acct_id": result.resolved_acct_id,
-            "resolved_card_num": result.resolved_card_num,
+            "resolved_acct_id": 7,
+            "resolved_card_num": "4859452612877065",
+            "is_valid": True,
         }
         actual = {
             "resolved_acct_id": result.resolved_acct_id,
             "resolved_card_num": result.resolved_card_num,
+            "is_valid": result.is_valid,
         }
         assert_records_equal(actual, expected, label="first-daily-tran")
 
