@@ -14,6 +14,7 @@ module that queries the database directly.
 
 from __future__ import annotations
 
+import html
 import logging
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -127,7 +128,7 @@ def _write_html_statement(
     out.write("<tr>\n")
     out.write('<td colspan="3" style="padding:0px 5px;background-color:#1d1d96b3;">\n')
     acct_id = str(account.acct_id).strip()
-    out.write(f"<h3>Statement for Account Number: {acct_id}</h3>\n")
+    out.write(f"<h3>Statement for Account Number: {html.escape(acct_id)}</h3>\n")
     out.write("</td>\n")
     out.write("</tr>\n")
 
@@ -148,17 +149,17 @@ def _write_html_statement(
         if stripped:
             name_parts.append(stripped)
     name = " ".join(name_parts)
-    out.write(f'<p style="font-size:16px">{name}</p>\n')
+    out.write(f'<p style="font-size:16px">{html.escape(name)}</p>\n')
 
     for addr in [customer.cust_addr_line_1, customer.cust_addr_line_2]:
-        out.write(f"<p>{str(addr).strip()}</p>\n")
+        out.write(f"<p>{html.escape(str(addr).strip())}</p>\n")
     addr3_parts = []
     for part in [customer.cust_addr_line_3, customer.cust_addr_state_cd,
                  customer.cust_addr_country_cd, customer.cust_addr_zip]:
         stripped = str(part).strip()
         if stripped:
             addr3_parts.append(stripped)
-    out.write(f"<p>{' '.join(addr3_parts)}</p>\n")
+    out.write(f"<p>{html.escape(' '.join(addr3_parts))}</p>\n")
     out.write("</td>\n")
     out.write("</tr>\n")
 
@@ -175,10 +176,10 @@ def _write_html_statement(
     curr_bal = Decimal(str(account.acct_curr_bal))
     bal_sign = "-" if curr_bal < 0 else " "
     bal_str = f"{abs(curr_bal):>9.2f}{bal_sign}"
-    out.write(f"<p>Account ID         : {acct_id}</p>\n")
+    out.write(f"<p>Account ID         : {html.escape(acct_id)}</p>\n")
     out.write(f"<p>Current Balance    : {bal_str}</p>\n")
     fico = str(customer.cust_fico_credit_score).strip()
-    out.write(f"<p>FICO Score         : {fico}</p>\n")
+    out.write(f"<p>FICO Score         : {html.escape(fico)}</p>\n")
     out.write("</td>\n")
     out.write("</tr>\n")
 
@@ -211,11 +212,11 @@ def _write_html_statement(
         out.write("<tr>\n")
         out.write('<td style="width:25%; padding:0px 5px; background-color:#f2f2f2; '
                   'text-align:left;">\n')
-        out.write(f"<p>{str(txn.tran_id).strip()}</p>\n")
+        out.write(f"<p>{html.escape(str(txn.tran_id).strip())}</p>\n")
         out.write("</td>\n")
         out.write('<td style="width:55%; padding:0px 5px; background-color:#f2f2f2; '
                   'text-align:left;">\n')
-        out.write(f"<p>{str(txn.tran_desc).strip()}</p>\n")
+        out.write(f"<p>{html.escape(str(txn.tran_desc).strip())}</p>\n")
         out.write("</td>\n")
         out.write('<td style="width:20%; padding:0px 5px; background-color:#f2f2f2; '
                   'text-align:right;">\n')

@@ -59,10 +59,7 @@ def _get_interest_rate(
     """Look up interest rate, falling back to 'DEFAULT' group."""
     dg = session.get(DiscGroup, (group_id, type_cd, cat_cd))
     if dg is None:
-        dg = session.get(DiscGroup, ("DEFAULT".ljust(10), type_cd, cat_cd))
-    if dg is None:
-        padded = "DEFAULT" + " " * 3
-        dg = session.get(DiscGroup, (padded, type_cd, cat_cd))
+        dg = session.get(DiscGroup, ("DEFAULT", type_cd, cat_cd))
     if dg is None:
         return Decimal("0.00")
     return Decimal(str(dg.dis_int_rate))

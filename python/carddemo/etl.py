@@ -144,7 +144,9 @@ _FILE_MAP: dict[str, tuple] = {
     "tcatbal.txt":   (load_tran_cat_bal,      "tran_cat_bal"),
     "trantype.txt":  (load_tran_types,        "tran_types"),
     "trancatg.txt":  (load_tran_categories,   "tran_categories"),
-    "dailytran.txt": (load_transactions,      "transactions (daily)"),
+    # NOTE: dailytran.txt is NOT loaded here.  It is sequential input
+    # read directly by POSTTRAN (batch/posttran.py), mirroring the COBOL
+    # pipeline where DALYTRAN-FILE is never REPRO'd into TRANSACT.
 }
 
 
