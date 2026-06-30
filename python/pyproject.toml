@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carddemo"
+version = "0.1.0"
+description = "CardDemo COBOL-to-Python migration — batch processing and data model"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+    "sqlalchemy>=2.0,<2.1",
+]
+
+[project.optional-dependencies]
+pg = ["psycopg2-binary>=2.9,<2.10"]
+dev = [
+    "pytest>=7.0,<9",
+    "pandas>=2.0,<3",
+]
+
+[project.scripts]
+carddemo-batch = "carddemo.runner:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.setuptools.packages.find]
+include = ["carddemo*"]
