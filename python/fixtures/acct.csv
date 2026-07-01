@@ -1,0 +1,3 @@
+acct_id,acct_active_status,acct_curr_bal,acct_credit_limit,acct_cash_credit_limit,acct_open_date,acct_expiration_date,acct_reissue_date,acct_curr_cyc_credit,acct_curr_cyc_debit,acct_addr_zip,acct_group_id
+80000000001,Y,1250.75,5000.00,1000.00,2020-01-15,2027-12-31,2025-01-15,1000.00,200.00,98101,GRP001
+80000000002,Y,3456.00,10000.00,2000.00,2019-06-01,2028-06-30,2024-06-01,5000.00,1500.00,80201,GRP002
