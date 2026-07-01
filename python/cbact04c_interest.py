@@ -350,6 +350,14 @@ def run_interest_calculation(
     if timestamp_fn is None:
         timestamp_fn = get_db2_format_timestamp
 
+    # COBOL reads TCATBALF via VSAM KSDS sequential access, which returns
+    # records in key order.  Enforce the same ordering defensively so that
+    # account-boundary detection works even if the caller's DataFrame is
+    # not pre-sorted.
+    tcatbal_df = tcatbal_df.sort_values(
+        by=["trancat_acct_id", "trancat_type_cd", "trancat_cd"]
+    ).reset_index(drop=True)
+
     output_transactions: list[TransactionRecord] = []
 
     ws_last_acct_num: str = ""
