@@ -1,0 +1,4 @@
+trnx_card_num,trnx_id,trnx_type_cd,trnx_cat_cd,trnx_source,trnx_desc,trnx_amt,trnx_merchant_id,trnx_merchant_name,trnx_merchant_city,trnx_merchant_zip,trnx_orig_ts,trnx_proc_ts
+4111111111111111,0000000000000001,01,5000,ONLINE,Grocery Store Purchase,45.67,100000001,FreshMart,Seattle,98101,2026-06-01-10.30.00.000000,2026-06-01-10.30.00.000000
+4111111111111111,0000000000000002,01,5000,ONLINE,Gas Station,-22.50,100000002,QuickFuel,Portland,97201,2026-06-02-14.15.00.000000,2026-06-02-14.15.00.000000
+4222222222222222,0000000000000003,02,6000,BATCH,Restaurant Dinner,128.99,100000003,TheGrill,Denver,80201,2026-06-03-19.00.00.000000,2026-06-03-19.00.00.000000
