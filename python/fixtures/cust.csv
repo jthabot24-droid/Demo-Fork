@@ -1,0 +1,3 @@
+cust_id,cust_first_name,cust_middle_name,cust_last_name,cust_addr_line_1,cust_addr_line_2,cust_addr_line_3,cust_addr_state_cd,cust_addr_country_cd,cust_addr_zip,cust_phone_num_1,cust_phone_num_2,cust_ssn,cust_govt_issued_id,cust_dob_yyyymmdd,cust_eft_account_id,cust_pri_card_holder_ind,cust_fico_credit_score
+100000001,John,Michael,Smith,123 Main Street,Apt 4B,Seattle,WA,USA,98101,2065551234,2065555678,123456789,DL123456,1985-03-15,EFT0000001,Y,750
+100000002,Jane,Ann,Doe,456 Oak Avenue,Suite 100,Denver,CO,USA,80201,3035551234,3035555678,987654321,DL789012,1990-07-22,EFT0000002,Y,680
